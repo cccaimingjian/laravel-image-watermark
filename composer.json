@@ -1,0 +1,35 @@
+{
+  "name": "cccaimingjian/laravel-image-watermark",
+  "description": "Make the whole image full of watermarks",
+  "keywords": [
+    "watermarks"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "cccaimingjian",
+      "email": "cccaimingjian@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.4|>=8.0",
+    "ext-gd": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "cccaimingjian\\ImageWatermark\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests"
+    }
+  },
+  "require-dev": {
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/package-versions-deprecated": true
+    }
+  }
+}
