@@ -18,7 +18,7 @@ class Maker
 
     public function __construct(string $original_path = '')
     {
-        if ($original_path){
+        if ($original_path) {
             $this->file_path = $original_path;
         }
     }
@@ -28,7 +28,8 @@ class Maker
      * 设置你要添加水印的那张图片的路径（原图）
      * @param string $file_path
      */
-    public function setInputFilePath(string $file_path){
+    public function setInputFilePath(string $file_path)
+    {
         $this->file_path = $file_path;
     }
 
@@ -40,7 +41,8 @@ class Maker
      * Higher values represent a counter-clockwise rotation.
      * For example, a value of 90 would result in bottom-to-top reading text.
      */
-    public function setAngle(float $angle){
+    public function setAngle(float $angle)
+    {
         $this->str_angel = $angle;
     }
 
@@ -50,7 +52,8 @@ class Maker
      * @param float $size
      * The font size. Depending on your version of GD, this should be specified as the pixel size (GD1) or point size (GD2).
      */
-    public function setFontSize(float $size){
+    public function setFontSize(float $size)
+    {
         $this->font_size = $size;
     }
 
@@ -61,7 +64,8 @@ class Maker
      * the string you want to add
      *
      */
-    public function setWatermarkString(string $string){
+    public function setWatermarkString(string $string)
+    {
         $this->string = $string;
     }
 
@@ -71,7 +75,8 @@ class Maker
      * @param int $color
      * The color index. Using the negative of a color index has the effect of turning off antialiasing. See imagecolorallocate.
      */
-    public function setWatermarkColor(int $color){
+    public function setWatermarkColor(int $color)
+    {
         $this->color = $color;
     }
 
@@ -82,7 +87,8 @@ class Maker
      * the pixel between watermark's START in horizontal direction
      * 注意是开头的间隔，间隔大小请根据水印的字符长度合理设置
      */
-    public function setWatermarkWidthInterval(int $interval){
+    public function setWatermarkWidthInterval(int $interval)
+    {
         $this->w_interval = $interval;
     }
 
@@ -92,7 +98,8 @@ class Maker
      * @param $interval
      * the pixel between watermark in vertical direction
      */
-    public function setWatermarkHeightInterval(int $interval){
+    public function setWatermarkHeightInterval(int $interval)
+    {
         $this->h_interval = $interval;
     }
 
@@ -102,7 +109,8 @@ class Maker
      * @param $font_path
      * the font file path
      */
-    public function setWatermarkFont(string $font_path){
+    public function setWatermarkFont(string $font_path)
+    {
         $this->font_path = $font_path;
     }
 
@@ -111,18 +119,23 @@ class Maker
      * 画水印
      * @throws Exception
      */
-    public function drawWatermark(){
-        if (!$this->image){
+    public function drawWatermark()
+    {
+        if (!$this->image) {
             $this->loadPicture();
         }
-        for ($i = 0; $i<=$this->pic_w; $i = $i + $this->w_interval){
-            for ($j = 0; $j<=$this->pic_h; $j = $j + $this->h_interval){
-                imagettftext($this->image,
+        for ($i = 0; $i<=$this->pic_w; $i = $i + $this->w_interval) {
+            for ($j = 0; $j<=$this->pic_h; $j = $j + $this->h_interval) {
+                imagettftext(
+                    $this->image,
                     $this->font_size,
                     $this->str_angel,
-                    $i,$j,
+                    $i,
+                    $j,
                     $this->color,
-                    $this->font_path,$this->string);
+                    $this->font_path,
+                    $this->string
+                );
             }
         }
     }
@@ -133,13 +146,14 @@ class Maker
      * The path to save the file to. If not set or null, return the image content.
      * @return bool|string
      */
-    public function encodeToJPG(string $file_name = ''){
-        if (!$file_name){
+    public function encodeToJPG(string $file_name = '')
+    {
+        if (!$file_name) {
             ob_start();
             imagejpeg($this->image);
             return ob_get_clean();
         }
-        return imagejpeg($this->image,$file_name);
+        return imagejpeg($this->image, $file_name);
     }
 
     /**
@@ -147,19 +161,21 @@ class Maker
      * @param string $file_name
      * @return bool|string
      */
-    public function encodeToPNG(string $file_name = ''){
-        if (!$file_name){
+    public function encodeToPNG(string $file_name = '')
+    {
+        if (!$file_name) {
             ob_start();
             imagepng($this->image);
             return ob_get_clean();
         }
-        return imagepng($this->image,$file_name);
+        return imagepng($this->image, $file_name);
     }
 
     /**
      * @return null|GdImage
      */
-    public function getGdImage(){
+    public function getGdImage()
+    {
         return $this->image;
     }
 
@@ -171,15 +187,15 @@ class Maker
      */
     protected function loadPicture()
     {
-        if (!file_exists($this->file_path)){
+        if (!file_exists($this->file_path)) {
             throw new Exception('File: "'.$this->file_path.'" does not exist');
         }
         $image_data = file_get_contents($this->file_path);
-        if (!$image_data){
+        if (!$image_data) {
             throw new Exception('file_get_contents() can NOT get the file:"'.$this->file_path.'"');
         }
         $this->image = imagecreatefromstring($image_data);
-        if (!$this->image){
+        if (!$this->image) {
             throw new Exception('Can NOT Load the file:"'.$this->file_path.'", please confirm the file is an image');
         }
         $this->pic_w = imagesx($this->image);
