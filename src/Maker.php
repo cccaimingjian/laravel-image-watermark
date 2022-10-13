@@ -186,4 +186,20 @@ class Maker
         $this->pic_h = imagesy($this->image);
         return true;
     }
+
+    /**
+     * @return null|GdImage
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param GdImage|null $image
+     */
+    public function setImage($image): void
+    {
+        $this->image = $image;
+    }
 }
