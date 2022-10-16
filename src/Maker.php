@@ -13,7 +13,7 @@ class Maker
     protected int $pic_w = 0;
     protected int $pic_h = 0;
     protected ?GdImage $image = null;
-    protected string $font_path = __DIR__.'/../vendor/cccaimingjian/laravel-image-watermark/src/font/SourceHanSerifSC-Medium.otf';
+    protected string $font_path = __DIR__.'/font/SourceHanSerifSC-Medium.otf';
     public string $file_path = '';
     public string $string = 'watermark';
     public float $font_size = 10.0;
