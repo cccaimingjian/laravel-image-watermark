@@ -10,14 +10,25 @@ composer require cccaimingjian/laravel-image-watermark -vvv
 ```
 
 ## Usage
+1. set the image you want to draw.  
+2. set the characters you want to write.
+3. start drawing
+4. encode the image,get a file OR get the file data.
 
+## Quick Start
 ```php
+//1. set the image you want to draw.
 $maker = new Maker();
 $maker->setInputFilePath('PATH_TO_YOUR_IMAGE');
-```
-or 
-```php
+//OR
 $maker = new Maker('PATH_TO_YOUR_IMAGE');
+
+```
+```php
+$maker->setWatermarkString('WATERMARK_STRING_HERE')//set the characters you want to write.
+      ->drawWatermark()//start drawing
+      ->encodeToJPG('FILE_PATH');//encode the image and save to FILE_PATH.
+
 ``` 
 or 
 ```php
@@ -25,10 +36,13 @@ $image = imagecreatefromstring($string);
 $image = imagecreatefromjpeg($filename);
 ...
 $maker = new Maker();
-$maker->setImage($image);
+$watermarked_image = $maker->setImage($image)
+                           ->setWatermarkString('WATERMARK_STRING_HERE')
+                           ->drawWatermark()
+                           ->encodeToJPG();
 ``` 
 
-### No.2
+### OPTIONS
 Set the watermark characters you want to add,and font file you want to use  
 然后，设置你要添加的水印字符,并且指定字体文件
 ```php
@@ -37,11 +51,8 @@ $maker->setWatermarkFont('PATH_TO_YOUR_FONT_FILE');
 ```
 or  
 ```php
-$maker->setWatermarkString('WATERMARK_STRING_HERE')
-->setWatermarkFont('PATH_TO_YOUR_FONT_FILE');
+$maker->setWatermarkString('WATERMARK_STRING_HERE')->setWatermarkFont('PATH_TO_YOUR_FONT_FILE');
 ```
-
-### No.3
 Set the watermark style  
 设置水印样式
 + Set angle, defult 15 degrees  
@@ -49,7 +60,7 @@ Set the watermark style
 ```php
 $maker->setAngle(10); 
 ```  
-+ Set font size, defult 10  
++ Set font size, default 10  
   设置字体大小
 ```php
 $maker->setFontSize(50); 
@@ -69,13 +80,13 @@ $maker->setWatermarkColor(0xFF0000);
 $maker->setWatermarkWidthInterval(100);
 $maker->setWatermarkHeightInterval(50);
 ```
-### No.4
+### Draw watermark
 Draw watermark  
 画水印
 ```php
 $maker->drawWatermark();
 ```
-### No.5
+### Get watermarked image
 Get the watermarked image  
 获取画了水印的图片
 + Get the watermarked image data directly  
